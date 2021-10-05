@@ -3,36 +3,85 @@ import {
   ChakraProvider,
   Box,
   Text,
-  Link,
+  Flex,
+  Center,
+  Spacer,
+  Container,
   VStack,
-  Code,
-  Grid,
-  theme,
+  FormControl,
+  FormLabel,
+  Switch,
+  useColorMode,
+  useColorModeValue,
+  Input
 } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+import "@fontsource/spartan/700.css"
+import customTheme from "./theme"
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
+// First Theme
+const darkSaturatedBlue = {
+  // main background
+  mainBackgroundColor:"hsl(222, 26%, 31%)",
+  // toggle background, keypad background
+  toggleKeybadBackgroundColor:"hsl(223, 31%, 20%)",
+  // screen background
+  screenBackgroundColor:"hsl(224, 36%, 15%)",
+  // Button digit colors
+  buttonDigitColor:"hsl(221, 14%, 31%)",
+}
+
+
+export default function App(){
+  const {toggleColorMode} = useColorMode();
+  // const {colorMode,toggleColorMode} = useColorMode();
+  console.log('The color mode', toggleColorMode);
+  const bg = useColorModeValue("red.500",darkSaturatedBlue.mainBackgroundColor);
+  const color = useColorModeValue("white","gray.800");
+
+  const startingNumber = 399981;
+  
+  return (
+    <ChakraProvider theme={customTheme}>
+    <Box bg={bg} h="100vh" w="100vw" color={color}>
+      <Box mx="auto" w={["100%",375]}>
+        {/* Main App Container */}
+        <Center>
+          <VStack>
+            {/* Top bar */}
+            <Container>
+              <Flex align="center" justify="space-between">
+                <Box>
+                  <Text fontSize="22" fontWeight="bold">calc</Text>
+                </Box>
+                <Spacer/>
+                <Box>
+                  <FormControl display="flex" alignItems="center">
+                        <FormLabel htmlFor="theme-switch" mb="0" fontSize="9">
+                          THEME
+                        </FormLabel>
+                        <Switch id="theme-switch" size="sm"  />
+                  </FormControl>
+                </Box>
+              </Flex>
+            </Container>
+            <Container p="3" size="lg" mb="2">
+              <Input
+               placeholder="0"
+               textAlign="right"
+               p="5"
+               bg={darkSaturatedBlue.screenBackgroundColor}
+               border="none"
+               fontSize="23"
+               />
+            </Container>
+            <Container bg={darkSaturatedBlue.toggleKeybadBackgroundColor} borderRadius="3">
+
+            </Container>
+          </VStack>
+        </Center>
+      </Box>
     </Box>
   </ChakraProvider>
-)
+  );
+}
+
