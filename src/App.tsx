@@ -13,10 +13,14 @@ import {
   Switch,
   useColorMode,
   useColorModeValue,
-  Input
+  Input,
+  Grid,
+  GridItem
 } from "@chakra-ui/react"
 import "@fontsource/spartan/700.css"
 import customTheme from "./theme"
+import CalculatorButton from "./button-component";
+import FunctionalButton from "./function-component";
 
 // First Theme
 const darkSaturatedBlue = {
@@ -72,10 +76,34 @@ export default function App(){
                bg={darkSaturatedBlue.screenBackgroundColor}
                border="none"
                fontSize="23"
+               value={startingNumber}
                />
             </Container>
-            <Container bg={darkSaturatedBlue.toggleKeybadBackgroundColor} borderRadius="3">
-
+            <Container bg={darkSaturatedBlue.toggleKeybadBackgroundColor} borderRadius="3" p="3">
+            <Grid templateColumns="repeat(4,1fr)" templateRows="repeat(5,1fr)" gap="2">
+            <CalculatorButton digit={7} color="teal" size="md"/>
+            <CalculatorButton digit={8} color="teal" size="md"/>
+            <CalculatorButton digit={9} color="teal" size="md"/>
+            <FunctionalButton digit={"DEL"} color="teal" size="md"/>
+            <CalculatorButton digit={4} color="teal" size="md"/>
+            <CalculatorButton digit={5} color="teal" size="md"/>
+            <CalculatorButton digit={6} color="teal" size="md"/>
+            <FunctionalButton digit={"+"} color="teal" size="md"/>
+            <CalculatorButton digit={1} color="teal" size="md"/>
+            <CalculatorButton digit={2} color="teal" size="md"/>
+            <CalculatorButton digit={3} color="teal" size="md"/>
+            <FunctionalButton digit={"-"} color="teal" size="md"/>
+            <FunctionalButton digit={"."} color="teal" size="md"/>
+            <CalculatorButton digit={0} color="teal" size="md"/>
+            <FunctionalButton digit={"/"} color="teal" size="md"/>
+            <FunctionalButton digit={"x"} color="teal" size="md"/>
+            <GridItem colSpan={2}>
+            <FunctionalButton digit={"RESET"} color="teal" size="md" style={buttonStyle}/>
+            </GridItem>
+            <GridItem colSpan={2}>
+            <FunctionalButton digit={"="} color="red" size="md" style={buttonStyle}/>
+            </GridItem>
+            </Grid>
             </Container>
           </VStack>
         </Center>
@@ -83,5 +111,9 @@ export default function App(){
     </Box>
   </ChakraProvider>
   );
+}
+
+const buttonStyle = {
+  width:"100%"
 }
 
