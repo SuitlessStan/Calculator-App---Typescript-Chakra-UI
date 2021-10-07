@@ -34,6 +34,11 @@ const darkSaturatedBlue = {
   buttonDigitColor:"hsl(221, 14%, 31%)",
 }
 
+// Custom styles
+const buttonStyle = {
+  width:"100%"
+}
+
 
 export default function App(){
   const {toggleColorMode} = useColorMode();
@@ -68,8 +73,8 @@ export default function App(){
                 </Box>
               </Flex>
             </Container>
-            <Container p="3" size="lg" mb="2">
-              <Input
+            <Box size="lg" mb="2" sx={{width:"100%"}}>
+            <Input
                placeholder="0"
                textAlign="right"
                p="5"
@@ -78,7 +83,7 @@ export default function App(){
                fontSize="23"
                value={startingNumber}
                />
-            </Container>
+            </Box>
             <Container bg={darkSaturatedBlue.toggleKeybadBackgroundColor} borderRadius="3" p="3">
             <Grid templateColumns="repeat(4,1fr)" templateRows="repeat(5,1fr)" gap="2">
             <CalculatorButton digit={7} color="teal" size="md"/>
@@ -113,7 +118,4 @@ export default function App(){
   );
 }
 
-const buttonStyle = {
-  width:"100%"
-}
 
