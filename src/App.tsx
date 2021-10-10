@@ -20,8 +20,8 @@ import {
 } from "@chakra-ui/react"
 import "@fontsource/spartan/700.css"
 import customTheme from "./theme"
-import CalculatorButton from "./button-component";
-import FunctionalButton from "./function-component";
+import CalculatorButton from "./components/button-component";
+import FunctionalButton from "./components/function-component";
 
 // First Theme
 const darkSaturatedBlue = {
