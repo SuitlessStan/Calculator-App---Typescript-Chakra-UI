@@ -43,12 +43,8 @@ const buttonStyle = {
 
 export default function App(){
   const {toggleColorMode} = useColorMode();
-  // const {colorMode,toggleColorMode} = useColorMode();
-  console.log('The color mode', toggleColorMode);
   const bg = useColorModeValue("red.500",darkSaturatedBlue.mainBackgroundColor);
   const color = useColorModeValue("white","gray.800");
-
-  const startingNumber = 399981;
 
   return (
     <ChakraProvider theme={customTheme}>
@@ -116,8 +112,8 @@ function DisplayResult() {
       bg={darkSaturatedBlue.screenBackgroundColor}
       border="none"
       fontSize="23"
-      value={value}
-      onChange={(e)=>setValue(parseInt(e.target.value))}
+      // value={value}
+      // onChange={(e)=>setValue(parseInt(e.target.value))}
        />
     </Box>
   );
