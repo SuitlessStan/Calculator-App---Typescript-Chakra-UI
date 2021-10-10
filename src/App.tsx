@@ -1,4 +1,5 @@
 import * as React from "react"
+import {useState} from 'react';
 import {
   ChakraProvider,
   Box,
@@ -48,68 +49,20 @@ export default function App(){
   const color = useColorModeValue("white","gray.800");
 
   const startingNumber = 399981;
-  
+
   return (
     <ChakraProvider theme={customTheme}>
-    <Box bg={bg} h="100vh" w="100vw" color={color}>
-      <Box mx="auto" w={["100%",375]}>
-        {/* Main App Container */}
+    <Box bg={darkSaturatedBlue.mainBackgroundColor} color={color} h="100vh">
+      {/* Main App Container */}
+      <Box>
         <Center>
           <VStack>
             {/* Top bar */}
-            <Container>
-              <Flex align="center" justify="space-between">
-                <Box>
-                  <Text fontSize="22" fontWeight="bold">calc</Text>
-                </Box>
-                <Spacer/>
-                <Box>
-                  <FormControl display="flex" alignItems="center">
-                        <FormLabel htmlFor="theme-switch" mb="0" fontSize="9">
-                          THEME
-                        </FormLabel>
-                        <Switch id="theme-switch" size="sm"  />
-                  </FormControl>
-                </Box>
-              </Flex>
-            </Container>
-            <Box size="lg" mb="2" sx={{width:"100%"}}>
-            <Input
-               placeholder="0"
-               textAlign="right"
-               p="5"
-               bg={darkSaturatedBlue.screenBackgroundColor}
-               border="none"
-               fontSize="23"
-               value={startingNumber}
-               />
-            </Box>
-            <Container bg={darkSaturatedBlue.toggleKeybadBackgroundColor} borderRadius="3" p="3">
-            <Grid templateColumns="repeat(4,1fr)" templateRows="repeat(5,1fr)" gap="2">
-            <CalculatorButton digit={7} color="teal" size="md"/>
-            <CalculatorButton digit={8} color="teal" size="md"/>
-            <CalculatorButton digit={9} color="teal" size="md"/>
-            <FunctionalButton digit={"DEL"} color="teal" size="md"/>
-            <CalculatorButton digit={4} color="teal" size="md"/>
-            <CalculatorButton digit={5} color="teal" size="md"/>
-            <CalculatorButton digit={6} color="teal" size="md"/>
-            <FunctionalButton digit={"+"} color="teal" size="md"/>
-            <CalculatorButton digit={1} color="teal" size="md"/>
-            <CalculatorButton digit={2} color="teal" size="md"/>
-            <CalculatorButton digit={3} color="teal" size="md"/>
-            <FunctionalButton digit={"-"} color="teal" size="md"/>
-            <FunctionalButton digit={"."} color="teal" size="md"/>
-            <CalculatorButton digit={0} color="teal" size="md"/>
-            <FunctionalButton digit={"/"} color="teal" size="md"/>
-            <FunctionalButton digit={"x"} color="teal" size="md"/>
-            <GridItem colSpan={2}>
-            <FunctionalButton digit={"RESET"} color="teal" size="md" style={buttonStyle}/>
-            </GridItem>
-            <GridItem colSpan={2}>
-            <FunctionalButton digit={"="} color="red" size="md" style={buttonStyle}/>
-            </GridItem>
-            </Grid>
-            </Container>
+            {TopBar()}
+            {/* Result Display */}
+            {DisplayResult()}
+            {/* Keys pad */}
+            {KeypadButtons()}
           </VStack>
         </Center>
       </Box>
@@ -118,4 +71,76 @@ export default function App(){
   );
 }
 
+
+function KeypadButtons() {
+  return <Container bg={darkSaturatedBlue.toggleKeybadBackgroundColor} borderRadius="3" p="3">
+    <Grid templateColumns="repeat(4,1fr)" templateRows="repeat(5,1fr)" gap="2">
+      <CalculatorButton digit={7} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor} />
+      <CalculatorButton digit={8} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor}/>
+      <CalculatorButton digit={9} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor}/>
+      <FunctionalButton digit={"DEL"} color="white" size="md" boxShadow="md"  />
+      <CalculatorButton digit={4} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor}/>
+      <CalculatorButton digit={5} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor}/>
+      <CalculatorButton digit={6} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor}/>
+      <FunctionalButton digit={"+"} color="white" size="md" boxShadow="md" />
+      <CalculatorButton digit={1} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor}/>
+      <CalculatorButton digit={2} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor}/>
+      <CalculatorButton digit={3} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor}/>
+      <FunctionalButton digit={"-"} color="white" size="md" boxShadow="md" />
+      <FunctionalButton digit={"."} color="white" size="md" boxShadow="md" />
+      <CalculatorButton digit={0} color="white" size="md" bg={darkSaturatedBlue.buttonDigitColor}/>
+      <FunctionalButton digit={"/"} color="white" size="md" boxShadow="md" />
+      <FunctionalButton digit={"x"} color="white" size="md"  boxShadow="md"/>
+      <GridItem colSpan={2}>
+        <FunctionalButton digit={"RESET"} color="teal" size="md" style={buttonStyle} boxShadow="md" />
+      </GridItem>
+      <GridItem colSpan={2}>
+        <FunctionalButton digit={"="} color="red" size="md" style={buttonStyle} boxShadow="md" />
+      </GridItem>
+    </Grid>
+  </Container>;
+}
+
+function DisplayResult() {
+  interface CalculatorData {
+    value:number,
+    prevState:null,
+  }
+  const [value,setValue] = useState<CalculatorData | null>(null);
+  return (
+    <Box size="lg" mb="2" sx={{ width: "100%" }}>
+    <Input
+      placeholder="0"
+      textAlign="right"
+      p="10"
+      bg={darkSaturatedBlue.screenBackgroundColor}
+      border="none"
+      fontSize="23"
+      value={value}
+      onChange={(e)=>setValue(parseInt(e.target.value))}
+       />
+    </Box>
+  );
+}
+
+function TopBar() {
+  return (
+    <Container p="0">
+      <Flex align="center" justify="space-between">
+      <Box>
+        <Text fontSize="22" fontWeight="bold">calc</Text>
+      </Box>
+      <Spacer />
+      <Box>
+        <FormControl display="flex" alignItems="center">
+          <FormLabel htmlFor="theme-switch" mb="0" fontSize="9">
+            THEME
+          </FormLabel>
+          <Switch id="theme-switch" size="sm" />
+        </FormControl>
+      </Box>
+      </Flex>
+    </Container>
+  );
+}
 
