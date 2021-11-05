@@ -42,26 +42,17 @@ const buttonStyle = {
 
 
 export default function App(){
-  const {toggleColorMode} = useColorMode();
-  const bg = useColorModeValue("red.500",darkSaturatedBlue.mainBackgroundColor);
-  const color = useColorModeValue("white","gray.800");
 
   return (
     <ChakraProvider theme={customTheme}>
-    <Box bg={darkSaturatedBlue.mainBackgroundColor} color={color} h="100vh">
-      {/* Main App Container */}
-      <Box>
+    <Box p="2" bg={darkSaturatedBlue.mainBackgroundColor} >
         <Center>
           <VStack>
-            {/* Top bar */}
-            {TopBar()}
-            {/* Result Display */}
-            {DisplayResult()}
-            {/* Keys pad */}
-            {KeypadButtons()}
+            <TopBar/>
+            <DisplayResult/>
+            <KeypadButtons/>
           </VStack>
         </Center>
-      </Box>
     </Box>
   </ChakraProvider>
   );
@@ -98,11 +89,6 @@ function KeypadButtons() {
 }
 
 function DisplayResult() {
-  interface CalculatorData {
-    value:number,
-    prevState:null,
-  }
-  const [value,setValue] = useState<CalculatorData | null>(null);
   return (
     <Box size="lg" mb="2" sx={{ width: "100%" }}>
     <Input
@@ -112,8 +98,7 @@ function DisplayResult() {
       bg={darkSaturatedBlue.screenBackgroundColor}
       border="none"
       fontSize="23"
-      // value={value}
-      // onChange={(e)=>setValue(parseInt(e.target.value))}
+      value={0}
        />
     </Box>
   );
@@ -132,7 +117,7 @@ function TopBar() {
           <FormLabel htmlFor="theme-switch" mb="0" fontSize="9">
             THEME
           </FormLabel>
-          <Switch id="theme-switch" size="sm" />
+          <Switch id="theme-switch" size="sm" isChecked={true} />
         </FormControl>
       </Box>
       </Flex>
